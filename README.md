@@ -22,6 +22,12 @@ docker exec -it postgres psql -U postgres --command "CREATE DATABASE movies"
 docker exec -it postgres psql -U postgres --command "CREATE DATABASE moviet"
 ```
 
+- Exemplo de acesso a documentação:
+
+```
+http://localhost:3000/api/
+```
+
 ### _INICIAR PROJETO EM DESENVOLVIMENTO_
 
 - Instalar dependências do projeto:
