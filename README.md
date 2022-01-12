@@ -38,6 +38,8 @@ npm install
 
 - Iniciar projeto em desenvolvimento:
 
+**Obs.: Será criado no sistem um perfil de administrador**: **username**: "Admin" **password**: "Admin@123"
+
 ```
 npm run start:dev
 ```
