@@ -9,7 +9,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { GetUser } from 'src/labels/get-user.decorator';
+import { GetUser } from '../../labels/get-user.decorator';
 import { ReadRentMoviesDto } from './dtos/read-rent-movies.dto';
 import { RentedService } from './rented.service';
 

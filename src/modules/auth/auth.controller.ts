@@ -9,6 +9,8 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Roles } from '../../labels/roles.decorator';
+import { RolesGuard } from '../../labels/roles.guard';
 import { AuthService } from './auth.service';
 import { AcessTokenDto } from './dtos/acess-token.dto';
 import { AuthCredentialsDto } from './dtos/auth-credentials.dto';
@@ -44,7 +46,8 @@ export class AuthController {
     summary: 'route to test user feedback in the context of the request',
   })
   @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard('jwt'))
+  @Roles()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   me(@Req() req) {
     return req.user;
   }

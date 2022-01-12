@@ -1,18 +1,39 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UsersRepository } from './users.repository';
 import { UsersService } from './users.service';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('AuthService', () => {
+  let usersService: UsersService;
+  let usersRepository: UsersRepository;
+  let mockUsers: CreateUserDto;
+
+  const mockUsersRepository = {
+    createUser: jest.fn(),
+  };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      providers: [
+        UsersService,
+        {
+          provide: getRepositoryToken(UsersRepository),
+          useValue: mockUsersRepository,
+        },
+      ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    usersRepository = moduleRef.get<UsersRepository>(UsersRepository);
+    usersService = moduleRef.get<UsersService>(UsersService);
+    mockUsers = {
+      username: 'Admin',
+      password: 'Admin@123',
+    };
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  it('should be defined the UsersService', () => {
+    expect(usersService).toBeDefined();
+    expect(usersRepository).toBeDefined();
   });
 });

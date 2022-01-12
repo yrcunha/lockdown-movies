@@ -1,6 +1,3 @@
-import { MovieEntity } from 'src/modules/movies/entities/movies.entity';
-import { SettingEntity } from 'src/modules/settings/entities/setting.entity';
-import { UserEntity } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -10,32 +7,35 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { MovieEntity } from '../../movies/entities/movies.entity';
+import { SettingEntity } from '../../settings/entities/setting.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Entity('rented')
 export class RentedEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 
+  @Column('uuid', { name: 'user_id' })
+  userId: string;
+
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   users: UserEntity;
 
-  @Column('uuid', { name: 'user_id' })
-  userId: string;
+  @Column('uuid', { name: 'movies_id' })
+  moviesId: string;
 
   @ManyToOne(() => MovieEntity)
   @JoinColumn({ name: 'movies_id', referencedColumnName: 'id' })
   movies: MovieEntity;
 
-  @Column('uuid', { name: 'movies_id' })
-  moviesId: string;
+  @Column('uuid', { name: 'settings_id' })
+  settingsId: string;
 
   @ManyToOne(() => SettingEntity)
   @JoinColumn({ name: 'settings_id', referencedColumnName: 'id' })
   settings: SettingEntity;
-
-  @Column('uuid', { name: 'settings_id' })
-  settingsId: string;
 
   @Column('timestamptz', { name: 'return_date' })
   returnDate: Date;

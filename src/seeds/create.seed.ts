@@ -1,4 +1,6 @@
 import * as bcrypt from 'bcrypt';
+import { MovieEntity } from 'src/modules/movies/entities/movies.entity';
+import { RentedEntity } from 'src/modules/rented/entities/rented.entity';
 import { Connection, createConnection } from 'typeorm';
 import { SettingEntity } from '../modules/settings/entities/setting.entity';
 import { UserEntity } from '../modules/users/entities/user.entity';
@@ -14,7 +16,8 @@ class CreateSeed {
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [UserEntity, SettingEntity],
+      entities: [UserEntity, SettingEntity, RentedEntity, MovieEntity],
+      synchronize: true,
     });
 
     const user = connection.getRepository(UserEntity);

@@ -13,7 +13,7 @@ export class UsersService {
 
   async getUserByUsername(username: string): Promise<UserEntity> {
     const user = await this.usersRepository
-      .findOneOrFail({ where: { username }, select: ['id'] })
+      .findOneOrFail({ where: { username }, select: ['id', 'isAdmin'] })
       .catch(() => {
         throw new UnauthorizedException(`Please check your login credentials`);
       });

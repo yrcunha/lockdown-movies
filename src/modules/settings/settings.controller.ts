@@ -8,12 +8,14 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { GetUser } from 'src/labels/get-user.decorator';
+import { GetUser } from '../../labels/get-user.decorator';
+import { Roles } from '../../labels/roles.decorator';
+import { RolesGuard } from '../../labels/roles.guard';
 import { UpdateSettingsDto } from './dtos/update-settings.dto';
 import { SettingsService } from './settings.service';
 
 @Controller({ path: 'settings', version: '1' })
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 @ApiTags('Settings')
 @ApiBearerAuth('access-token')
 @ApiUnauthorizedResponse()
@@ -30,6 +32,7 @@ export class SettingsController {
   @Put()
   @ApiOperation({ summary: 'set up return time and fine' })
   @ApiBadRequestResponse()
+  @Roles()
   updateSettings(
     @GetUser() userId: string,
     @Body() body: UpdateSettingsDto,

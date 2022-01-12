@@ -17,11 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<{ id: string }> {
+  async validate(
+    payload: JwtPayload,
+  ): Promise<{ id: string; isAdmin: boolean }> {
     const { username } = payload;
 
-    const { id } = await this.usersService.getUserByUsername(username);
+    const { id, isAdmin } = await this.usersService.getUserByUsername(username);
 
-    return { id };
+    return { id, isAdmin };
   }
 }

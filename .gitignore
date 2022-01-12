@@ -36,3 +36,4 @@ lerna-debug.log*
 
 # IDE - VSCode
 /env/.env.stage.dev
+/env/.env.stage.test

@@ -10,13 +10,15 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { GetUser } from 'src/labels/get-user.decorator';
+import { GetUser } from '../../labels/get-user.decorator';
+import { Roles } from '../../labels/roles.decorator';
+import { RolesGuard } from '../../labels/roles.guard';
 import { CreateMoviesDto } from './dtos/create-movies.dto';
 import { ReadMovieDto } from './dtos/read-movies.dto';
 import { MoviesService } from './movies.service';
 
 @Controller({ path: 'movies', version: '1' })
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 @ApiTags('Movies')
 @ApiBearerAuth('access-token')
 @ApiUnauthorizedResponse()
@@ -47,6 +49,7 @@ export class MoviesController {
   @ApiOperation({ summary: 'register movies' })
   @ApiBody({ type: CreateMoviesDto, isArray: true })
   @ApiConflictResponse()
+  @Roles()
   createMovies(
     @GetUser() userId: string,
     @Body() body: Array<CreateMoviesDto>,
